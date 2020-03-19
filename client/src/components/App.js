@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import NavBar from "./NavBar";
-import Temperature from "./Temperature";
-import Login from "./Login";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/App.css";
-import { appConfig } from "../utils/constants";
-import { UserSession } from "blockstack";
-import Button from "react-bootstrap/Button";
-import { configure, User, getConfig } from "radiks";
-import Patient from "../models/patient";
+import React, { Component } from 'react';
+import NavBar from './NavBar';
+import Temperature from './Temperature';
+import Login from './Login';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/App.css';
+import { appConfig } from '../utils/constants';
+import { UserSession } from 'blockstack';
+import Button from 'react-bootstrap/Button';
+import { configure, User, getConfig } from 'radiks';
+import Patient from '../models/patient';
 
 const userSession = new UserSession({
-  appConfig: appConfig
+  appConfig: appConfig,
 });
 
 export default class App extends Component {
@@ -21,20 +21,19 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    if (!process.env.REACT_APP_QA_URL) {
-      return;
-    }
     configure({
-      apiServer: process.env.REACT_APP_QA_URL, // TODO this will change to wherever our radiks server will be hosted in prod
-      userSession: this.userSession
+      apiServer: process.env.REACT_APP_QA_URL || 'http://127.0.0.1:5000', // TODO this will change to wherever our radiks server will be hosted in prod
+      userSession: this.userSession,
     });
 
     const { userSession } = getConfig();
     if (userSession.isUserSignedIn()) {
+      await User.createWithCurrentUser();
+
       // Creates a new Patient model associated with the user
       const patient = new Patient({
-        doctor: "Test Doctor",
-        location: ["123", "456"]
+        doctor: 'Test Doctor',
+        location: ['123', '456'],
       });
 
       // Saves that patient in the user's associated Gaia storage, encrypted, and replicated in MongoDB
@@ -44,7 +43,7 @@ export default class App extends Component {
       const allPatients = await Patient.fetchOwnList();
 
       // Print the resulting
-      console.log("ALL PATIENTS:", allPatients);
+      console.log('ALL PATIENTS:', allPatients);
 
       // Delete the entry, to keep things clean for the purpose of example
       var p;
@@ -54,7 +53,7 @@ export default class App extends Component {
     } else if (userSession.isSignInPending()) {
       await userSession.handlePendingSignIn();
       await User.createWithCurrentUser();
-      window.location = "/";
+      window.location = '/';
     }
   }
 
@@ -64,7 +63,7 @@ export default class App extends Component {
     if (userSession.isSignInPending()) {
       await userSession.handlePendingSignIn();
       await User.createWithCurrentUser();
-      window.location = "/";
+      window.location = '/';
     }
     userSession.redirectToSignIn();
   }
