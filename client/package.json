@@ -18,9 +18,11 @@
     "axios": "^0.19.2",
     "blockstack": "^19.3.0",
     "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
     "radiks": "^0.2.2-beta.1",
     "react": "^16.13.0",
     "react-app-rewired": "^2.1.5",
+    "react-blockstack": "^0.6.4",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-calendar": "^3.0.0",
     "react-charts": "^2.0.0-beta.6",
@@ -29,8 +31,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "chart.js": "^2.9.3"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@blockstack/prettier-config": "0.0.5"
