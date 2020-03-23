@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/themePalette.css';
 import '../css/NavBar.css';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import FeaturedPlayListOutlinedIcon from '@material-ui/icons/FeaturedPlayListOut
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import { useHistory } from 'react-router-dom';
 //import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 
 const styles = {
@@ -31,39 +32,36 @@ const styles = {
   },
 };
 
-class NavBar extends React.Component {
-  state = {
-    value: 'log',
+const NavBar = ({ classes }) => {
+  const [value, setValue] = useState('log');
+  const history = useHistory();
+
+  const handleChange = (_, newValue) => {
+    setValue(newValue);
+    history.push(newValue);
   };
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-  render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
-    return (
-      <BottomNavigation value={value} onChange={this.handleChange} className={classes.root} showLabels>
-        <BottomNavigationAction
-          label="Log"
-          value="log"
-          classes={{
-            root: classes.actionItem,
-            selected: classes.selected,
-          }}
-          icon={<FeaturedPlayListOutlinedIcon className={classes.buttons} />}
-        />
-        <BottomNavigationAction
-          label="Education"
-          value="education"
-          classes={{
-            root: classes.actionItem,
-            selected: classes.selected,
-          }}
-          icon={<StarBorderIcon className={classes.buttons} />}
-        />
-        {/*<BottomNavigationAction
+  return (
+    <BottomNavigation value={value} onChange={handleChange} className={classes.root} showLabels>
+      <BottomNavigationAction
+        label="Log"
+        value="log"
+        classes={{
+          root: classes.actionItem,
+          selected: classes.selected,
+        }}
+        icon={<FeaturedPlayListOutlinedIcon className={classes.buttons} />}
+      />
+      <BottomNavigationAction
+        label="Education"
+        value="education"
+        classes={{
+          root: classes.actionItem,
+          selected: classes.selected,
+        }}
+        icon={<StarBorderIcon className={classes.buttons} />}
+      />
+      {/*<BottomNavigationAction
           label="Chat"
           value="chat"
           classes={{
@@ -72,27 +70,26 @@ class NavBar extends React.Component {
           }}
           icon={<VideocamOutlinedIcon className={classes.buttons} />}
         />*/}
-        <BottomNavigationAction
-          label="Map"
-          value="map"
-          classes={{
-            root: classes.actionItem,
-            selected: classes.selected,
-          }}
-          icon={<LocationOnOutlinedIcon className={classes.buttons} />}
-        />
-        <BottomNavigationAction
-          label="Settings"
-          value="settings"
-          classes={{
-            root: classes.actionItem,
-            selected: classes.selected,
-          }}
-          icon={<SettingsOutlinedIcon className={classes.buttons} />}
-        />
-      </BottomNavigation>
-    );
-  }
-}
+      <BottomNavigationAction
+        label="Map"
+        value="map"
+        classes={{
+          root: classes.actionItem,
+          selected: classes.selected,
+        }}
+        icon={<LocationOnOutlinedIcon className={classes.buttons} />}
+      />
+      <BottomNavigationAction
+        label="Settings"
+        value="settings"
+        classes={{
+          root: classes.actionItem,
+          selected: classes.selected,
+        }}
+        icon={<SettingsOutlinedIcon className={classes.buttons} />}
+      />
+    </BottomNavigation>
+  );
+};
 
 export default withStyles(styles)(NavBar);
