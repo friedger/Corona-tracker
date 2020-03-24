@@ -23,8 +23,7 @@ function PrivateRoute({ userSession, children, ...rest }) {
   return (
     <Route
       {...rest}
-      render={s => {
-        const location = s.location;
+      render={({ location }) => {
         return userSession && userSession.isUserSignedIn() ? (
           children
         ) : (
